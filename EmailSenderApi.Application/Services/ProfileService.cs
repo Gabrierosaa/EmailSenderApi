@@ -23,5 +23,20 @@ namespace EmailSenderApi.Application.Services
             
             await _profilerepository.CreateAsync(profile);
         }
+
+        public Task<Profile> GetAsync(ProfileResponseDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ProfileResponseDto> GetAsyncById(Guid id)
+        {
+            var profileGet = await _profilerepository.GetAsyncById(id);
+
+            if (profileGet is null)
+                return null;
+
+            return profileGet;
+        }
     }
 }
