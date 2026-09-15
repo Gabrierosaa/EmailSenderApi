@@ -24,9 +24,23 @@ namespace EmailSenderApi.Application.Services
             await _profilerepository.CreateAsync(profile);
         }
 
-        public Task<Profile> GetAsync(ProfileResponseDto dto)
+        public async Task<ProfileResponseDto> GetAsync(ProfileResponseDto dto)
         {
-            throw new NotImplementedException();
+            // Converte DTO para entidade para consulta no repositório
+            var profileToSearch = new Profile(dto.Name, dto.Description, dto.Email);
+
+            var profileFound = await _profilerepository.GetAsync(profileToSearch);
+
+            if (profileFound is null)
+                return null;
+
+            return new ProfileResponseDto
+            {
+                Id = profileFound.Id ?? Guid.Empty,
+                Name = profileFound.Name ?? string.Empty,
+                Description = profileFound.Description,
+                Email = profileFound.Email
+            };
         }
 
         public async Task<ProfileResponseDto> GetAsyncById(Guid id)
@@ -36,7 +50,13 @@ namespace EmailSenderApi.Application.Services
             if (profileGet is null)
                 return null;
 
-            return profileGet;
+            return new ProfileResponseDto
+            {
+                Id = profileGet.Id ?? Guid.Empty,
+                Name = profileGet.Name ?? string.Empty,
+                Description = profileGet.Description,
+                Email = profileGet.Email
+            };
         }
     }
 }

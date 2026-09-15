@@ -2,39 +2,39 @@
 {
     public class Email
     {
-        string From { get; set; }
-        string To { get; set; }
-        string Subject { get; set; }
-        string Body { get; set; }
-        DateTime Data { get; set; } = DateTime.Now;
+        public int Id { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public DateTime Data { get; set; }
 
-        public Email(string from, string to, string subject, string body, DateTime data)
+        private Email() { } 
+
+        public Email(string from, string to, string subject, string body)
         {
             From = from;
             To = to;
             Subject = subject;
             Body = body;
-            Data = data;
+            Data = DateTime.Now;
 
             Validations();
         }
 
         private void Validations()
         {
-            if (From == null)
-                throw new Exception("From nao pode ser vazio");
+            if (string.IsNullOrWhiteSpace(From))
+                throw new ArgumentException("From nao pode ser vazio");
 
-            if (To == null)
-                throw new Exception("To nao pode ser vazio");
+            if (string.IsNullOrWhiteSpace(To))
+                throw new ArgumentException("To nao pode ser vazio");
 
-            if (Subject == null)
-                throw new Exception("Subject nao pode ser vazio");
+            if (string.IsNullOrWhiteSpace(Subject))
+                throw new ArgumentException("Subject nao pode ser vazio");
 
-            if (Body == null)
-                throw new Exception("Body nao pode ser vazio");
-
-            if (Data == null)
-                throw new Exception("Data nao pode ser vazio");
+            if (string.IsNullOrWhiteSpace(Body))
+                throw new ArgumentException("Body nao pode ser vazio");
         }
     }
 }
