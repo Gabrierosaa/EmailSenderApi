@@ -16,7 +16,7 @@ namespace EmailSenderApi.Infrastructure.Repositories
 
         public async Task CreateAsync(Profile profile)
         {
-            await _collection.InsertOneAsync(profile);
+            await _collection.InsertOneAsync(profile); 
         }
 
         public async Task<Profile> GetAsyncById(Guid id)
