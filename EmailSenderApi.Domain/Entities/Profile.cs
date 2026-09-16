@@ -2,7 +2,7 @@
 {
     public class Profile
     {
-        public Guid? Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string? Name { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
@@ -19,20 +19,18 @@
 
         private void Validations(string name, string description, string email)
         {
-            if (Id == null)
-                throw new Exception("O Id não pode esta vazio");
-
             if (Name == null || Name.Length > 14)
-                throw new Exception("O Nome nao pode estar vazio ou maior que 14 caracteres");
+                throw new Exception(
+                    "O Nome não pode estar vazio ou ser maior que 14 caracteres"
+                );
 
-            if (Name.Length > 150)
-                throw new Exception("A Descricao nao pode ser maior que 150 caracteres");
+            if (Description.Length > 150)
+                throw new Exception(
+                    "A Descrição não pode ser maior que 150 caracteres"
+                );
 
             if (Email == null)
                 throw new Exception("O Email não pode ser vazio");
-
-            
         }
-
     }
 }

@@ -26,7 +26,6 @@ namespace EmailSenderApi.Application.Services
 
         public async Task<ProfileResponseDto> GetAsync(ProfileResponseDto dto)
         {
-            // Converte DTO para entidade para consulta no repositório
             var profileToSearch = new Profile(dto.Name, dto.Description, dto.Email);
 
             var profileFound = await _profilerepository.GetAsync(profileToSearch);
@@ -36,7 +35,7 @@ namespace EmailSenderApi.Application.Services
 
             return new ProfileResponseDto
             {
-                Id = profileFound.Id ?? Guid.Empty,
+                Id = profileFound.Id,
                 Name = profileFound.Name ?? string.Empty,
                 Description = profileFound.Description,
                 Email = profileFound.Email
@@ -52,7 +51,7 @@ namespace EmailSenderApi.Application.Services
 
             return new ProfileResponseDto
             {
-                Id = profileGet.Id ?? Guid.Empty,
+                Id = profileGet.Id,
                 Name = profileGet.Name ?? string.Empty,
                 Description = profileGet.Description,
                 Email = profileGet.Email

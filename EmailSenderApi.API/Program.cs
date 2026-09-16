@@ -1,6 +1,13 @@
+using EmailSenderApi.Application.Interfaces;
+using EmailSenderApi.Application.Services;
+using EmailSenderApi.Domain.Interfaces;
 using EmailSenderApi.Infrastructure;
+using EmailSenderApi.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Controllers
+builder.Services.AddControllers();
 
 // OpenAPI
 builder.Services.AddOpenApi();
@@ -12,6 +19,12 @@ builder.Services.Configure<MongoSettings>(
 
 builder.Services.AddSingleton<IMongoContext, MongoContext>();
 
+// Repositories
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+
+// Services
+builder.Services.AddScoped<IProfileService, ProfileService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -20,5 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
