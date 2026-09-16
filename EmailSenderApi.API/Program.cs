@@ -21,9 +21,11 @@ builder.Services.AddSingleton<IMongoContext, MongoContext>();
 
 // Repositories
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IEmailRepository, EmailRepository>();
 
 // Services
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
 
