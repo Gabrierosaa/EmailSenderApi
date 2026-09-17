@@ -3,8 +3,14 @@ using EmailSenderApi.Application.Services;
 using EmailSenderApi.Domain.Interfaces;
 using EmailSenderApi.Infrastructure;
 using EmailSenderApi.Infrastructure.Repositories;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Registrar serializador de Guid global (usar antes de qualquer operação com MongoDB)
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
 // Controllers
 builder.Services.AddControllers();
