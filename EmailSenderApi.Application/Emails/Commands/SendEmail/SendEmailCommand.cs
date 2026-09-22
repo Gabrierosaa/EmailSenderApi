@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EmailSenderApi.Application.Emails.Commands.SendEmail
 {
-    internal class SendEmailCommand
+    public class SendEmailCommand
     {
     }
 }
