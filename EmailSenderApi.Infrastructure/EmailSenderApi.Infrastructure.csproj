@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmailSenderApi.Domain\EmailSenderApi.Domain.csproj" />
+    <ProjectReference Include="..\EmailSenderApi.Application\EmailSenderApi.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
