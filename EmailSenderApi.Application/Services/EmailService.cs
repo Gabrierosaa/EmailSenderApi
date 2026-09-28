@@ -10,11 +10,13 @@ namespace EmailSenderApi.Application.Services
     {
         private readonly IEmailRepository _emailRepository;
         private readonly IProfileRepository _profileRepository;
+        private readonly IEmailSender _emailSender;
 
-        public EmailService(IEmailRepository emailRepository, IProfileRepository profileRepository)
+        public EmailService(IEmailRepository emailRepository, IProfileRepository profileRepository, IEmailSender emailSender)
         {
             _emailRepository = emailRepository;
             _profileRepository = profileRepository;
+            _emailSender = emailSender;
         }
 
         public async Task CreateAsync(EmailCreateDTO dto, Guid profileId)
@@ -39,7 +41,7 @@ namespace EmailSenderApi.Application.Services
                         senderProfile.Id
                     );
 
-                    await _emailRepository.CreateAsync(email);
+                    await SendAndPersistAsync(email);
                 }
 
                 return;
@@ -53,7 +55,22 @@ namespace EmailSenderApi.Application.Services
                 senderProfile.Id
             );
 
-            await _emailRepository.CreateAsync(emailFallback);
+            await SendAndPersistAsync(emailFallback);
+        }
+
+        private async Task SendAndPersistAsync(Email email)
+        {
+            try
+            {
+                await _emailSender.SendAsync(email);
+                email.MarkAsSent();
+            }
+            catch (Exception ex)
+            {
+                email.MarkAsFailed(ex.Message);
+            }
+
+            await _emailRepository.CreateAsync(email);
         }
     }
 }

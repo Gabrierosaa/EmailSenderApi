@@ -40,7 +40,10 @@ namespace EmailSenderApi.Infrastructure.Email
                 : SecureSocketOptions.StartTlsWhenAvailable;
 
             await client.ConnectAsync(_settings.Host, _settings.Port, socketOptions, cancellationToken);
-            await client.AuthenticateAsync(_settings.Username, _settings.Password, cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(_settings.Username))
+                await client.AuthenticateAsync(_settings.Username, _settings.Password, cancellationToken);
+
             await client.SendAsync(message, cancellationToken);
             await client.DisconnectAsync(true, cancellationToken);
         }

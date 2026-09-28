@@ -4,7 +4,7 @@ namespace EmailSenderApi.Domain.Entities
 {
     public class Email
     {
-        public int Id { get; private set; }
+        public Guid Id { get; private set; } = Guid.NewGuid();
         public string From { get; private set; }
         public string To { get; private set; }
         public string Subject { get; private set; }

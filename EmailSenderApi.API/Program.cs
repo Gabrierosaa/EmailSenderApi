@@ -2,6 +2,7 @@ using EmailSenderApi.Application.Interfaces;
 using EmailSenderApi.Application.Services;
 using EmailSenderApi.Domain.Interfaces;
 using EmailSenderApi.Infrastructure;
+using EmailSenderApi.Infrastructure.Email;
 using EmailSenderApi.Infrastructure.Repositories;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -24,6 +25,12 @@ builder.Services.Configure<MongoSettings>(
 );
 
 builder.Services.AddSingleton<IMongoContext, MongoContext>();
+
+// SMTP
+builder.Services.Configure<SmtpSettings>(
+    builder.Configuration.GetSection("SmtpSettings")
+);
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
 
 // Repositories
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
